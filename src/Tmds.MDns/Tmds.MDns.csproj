@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Description>This library allows to find services announced via multicast DNS (RFC6762 and RFC6763).</Description>
     <AssemblyTitle>Tmds.MDns</AssemblyTitle>
-    <VersionPrefix>0.8.1</VersionPrefix>
+    <VersionPrefix>0.8.1-displaydata1</VersionPrefix>
     <Authors>Tom Deseyn</Authors>
-    <TargetFrameworks>netstandard2.0;net60</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net80</TargetFrameworks>
     <AssemblyName>Tmds.MDns</AssemblyName>
     <PackageId>Tmds.MDns</PackageId>
     <PackageTags>mdns;avahi;zeroconf;rfc6762;rfc6763</PackageTags>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>git://github.com/tmds/Tmds.MDns</RepositoryUrl>
+    <RepositoryUrl>git://github.com/displaydata/Tmds.MDns</RepositoryUrl>
   </PropertyGroup>
 </Project>
