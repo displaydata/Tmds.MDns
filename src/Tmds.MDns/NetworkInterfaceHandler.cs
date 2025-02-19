@@ -239,41 +239,6 @@ namespace Tmds.MDns
             }
         }
 
-        private bool IsLocalNetworkAddress(IPAddress address)
-        {
-            switch (address.AddressFamily)
-            {
-                case AddressFamily.InterNetworkV6:
-                    return address.ScopeId == _ipv6InterfaceIndex;
-
-                case AddressFamily.InterNetwork:
-                    var unicastAddresses = _unicastAddresses;
-                    if (unicastAddresses == null)
-                    {
-                        return false;
-                    }
-                    for (int i = 0; i < unicastAddresses.Count; i++)
-                    {
-                        var unicastAddress = unicastAddresses[i];
-
-                        if (unicastAddress.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            var addr1 = BitConverter.ToUInt32(address.GetAddressBytes(), 0);
-                            var addr2 = BitConverter.ToUInt32(unicastAddress.Address.GetAddressBytes(), 0);
-                            var mask = BitConverter.ToUInt32(unicastAddress.IPv4Mask.GetAddressBytes(), 0);
-                            if ((addr1 & mask) == (addr2 & mask))
-                            {
-                                return true;
-                            }
-                        }
-
-                    }
-                    return false;
-                default:
-                    return false;
-            }
-        }
-
         private void OnReceive(object sender, SocketAsyncEventArgs args)
         {
             lock (this)
@@ -290,11 +255,6 @@ namespace Tmds.MDns
                 }
 
                 IPAddress receivedFrom = (args.RemoteEndPoint as IPEndPoint).Address;
-                if (!IsLocalNetworkAddress(receivedFrom))
-                {
-                    StartReceive(socket, args);
-                    return;
-                }
 
                 int length = args.BytesTransferred;
                 var stream = new MemoryStream(args.Buffer, 0, length);
